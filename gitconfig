@@ -1,0 +1,36 @@
+[http]
+	sslverify = false
+[user]
+  email = zach101@gmail.com
+	name = Zach Auclair
+[color]
+  diff = auto
+  interactive = auto
+  status = auto
+  branch = auto
+  ui = true
+  pager = true
+[alias]
+  pull = pull --ff-only
+  graph = log --graph --oneline --all --decorate
+  g = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white). %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  s = status
+  manifest = ls-tree --full-tree -r HEAD
+  co = checkout
+  ci = commit
+  aliases = "!git config -l | grep alias | cut -c 7-"
+  changes = diff-tree --no-commit-id --name-status -r
+  branch-prune = "!git branch --merged | grep -v '\\*' | grep -v master | xargs -n 1 git branch -d"
+  branch-new = "!git checkout master && git pull && git checkout -b $1 && git push --set-upstream fork $1"
+  update = "!git checkout master && git fetch --all --prune && git pull && git branch-prune"
+  branch-new = "!f() { git checkout master && git checkout -b $1 && git push --set-upstream fork $1; }; f"
+  push-review = push origin HEAD:refs/for/master
+  push-review2 = push origin HEAD:refs/for/platform
+
+[push]
+	default = simple
+[pull]
+#  rebase = true
+[diff]
+  # Instruct Git to use mnemonic prefixes (Such as *i*ndex, *w*ork tree, *c*ommit, or *o*bject) instead of the standard *a* and *b* notation when outputting a diff to the console.
+  #mnemonicprefix = true

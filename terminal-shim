@@ -1,0 +1,20 @@
+# to be sourced in a login shell
+# bash
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+white=$(tput setaf 7)
+bold=$(tput bold)
+reset=$(tput sgr0)
+blue=$(tput setaf 4)
+red=$(tput setaf 1)
+
+user_color=$green
+host_color=$green
+
+# sudoed, different user color
+if [[ -n "$SUDO_USER" ]]; then
+  user_color=$red
+fi
+
+# show exit status in red if non-zero
+export PS1='\[$user_color\]\u\[$reset\]\[$host_color\]@\H:\[$reset\]\[$yellow$bold\]\W\[$reset\]\[$white\][\t]$(e=$?; [ $e -ne 0 ] && echo -n \[$red\]$e\[$reset\])\$\[$reset\] '
