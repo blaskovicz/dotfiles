@@ -33,11 +33,15 @@ function install_dotfiles {
     install --backup=numbered --compare "$file" "$target" || die "failed to install $file."
   done
 }
+function post_install {
+  log "complete... running a login shell to pick up changes."
+  bash -l
+}
 function main {
   #TODO ssh-copy-id $hostname
   get_repo
   install_dotfiles
-  log "complete"
+  post_install
 }
 
 main
