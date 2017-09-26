@@ -1,8 +1,8 @@
-nagios-syntax
-scss-syntax
-vim-better-whitespace
-vim-coffee-script
-vim-go
-vim-javascript-syntax
-vim-json
-vim-less
+https://github.com/vim-scripts/nagios-syntax
+https://github.com/cakebaker/scss-syntax.vim
+https://github.com/ntpeters/vim-better-whitespace
+https://github.com/kchmck/vim-coffee-script
+https://github.com/fatih/vim-go
+https://github.com/jelera/vim-javascript-syntax
+https://github.com/elzr/vim-json
+https://github.com/groenewege/vim-less
