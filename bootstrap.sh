@@ -2,9 +2,9 @@
 #
 # download from github and run to bootstrap all dotfile installations in this repo
 #
-# curl -s https://raw.github.factset.com/zauclair/dotfiles/master/bootstrap.sh | bash
+# curl -s https://raw.githubusercontent.com/blaskovicz/dotfiles/master/bootstrap.sh | bash
 REPO_ROOT="$HOME/zauclair_dotfiles"
-REPO_URI="https://github.factset.com/zauclair/dotfiles.git"
+REPO_URI="https://github.com/blaskovicz/dotfiles.git"
 function log {
   echo "[dotfiles][$(date)] $*"
 }
