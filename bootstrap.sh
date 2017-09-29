@@ -30,9 +30,9 @@ function get_repo {
   fi
 }
 function install_vim_bundles {
-  if [[ ! -e "./vim_bundles" ]]; then return; fi
   log "installing vim bundles..."
   cd_repo
+  if [[ ! -e "./vim_bundles" ]]; then return; fi
   mkdir -p "$HOME/.vim/autoload" || die "failed to create vim autoload directory."
   mkdir -p "$HOME/.vim/bundle" || die "failed to create vim bundle directory."
   curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim || die "failed to download vim pathogen."
