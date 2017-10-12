@@ -17,6 +17,27 @@ function cd_repo {
   # for debugging
   #cd ~/Documents/dotfiles
 }
+function careful_copy {
+  [[ $# == 2 ]] || die "usage: careful_copy(source_file, target_file)"
+  source_file=$1
+  target_file=$2
+
+  [[ -e "$source_file" ]] || die "source file $source_file does not exist."
+
+  if [[ -e "$target_file" ]]; then
+    echo -n "----> $target_file already exists. "
+    if [[ "$OVERWRITE_DOTFILES" == "true" ]]; then
+      echo "backing up and overwriting..."
+    else
+      echo "skipping install because OVERWRITE_DOTFILES != true..."
+    fi
+    diff -u -w "$target_file" "$source_file"
+  fi
+
+  if [[ ! -e "$target_file" || "$OVERWRITE_DOTFILES" == "true" ]]; then
+    install --verbose --backup=numbered --compare "$source_file" "$target_file" || die "failed to install $target_file."
+  fi
+}
 function get_repo {
   [[ $# == 2 ]] || die "usage: get_repo(git_repo_uri, target_directory)"
   repo_uri=$1
@@ -41,23 +62,19 @@ function install_vim_bundles {
     get_repo "$repo" "$repo_dir"
   done
 }
+function install_ssh_config {
+  log "installing ssh config..."
+  cd_repo
+  mkdir -p "$HOME/.ssh/" || die "failed to create .ssh directory."
+  chmod 0700 "$HOME/.ssh/" || die "failed to chmod .ssh directory"
+  careful_copy "./ssh/config" "$HOME/.ssh/config"
+  chmod 0700 "$HOME/.ssh/config" || die "failed to chmod ssh config."
+}
 function install_dotfiles {
   log "installing files..."
   cd_repo
   for file in profile terminal-shim tmux.conf vimrc gitconfig; do
-    target="$HOME/.$file"
-    if [[ -e "$target" ]]; then
-      echo -n "----> $target already exists. "
-      if [[ "$OVERWRITE_DOTFILES" == "true" ]]; then
-        echo "backing up and overwriting..."
-      else
-        echo "skipping install because OVERWRITE_DOTFILES != true..."
-      fi
-      diff -u -w "$target" "$file"
-    fi
-    if [[ ! -e "$target" || "$OVERWRITE_DOTFILES" == "true" ]]; then
-      install --verbose --backup=numbered --compare "$file" "$target" || die "failed to install $file."
-    fi
+    careful_copy "./$file" "$HOME/.$file"
   done
 }
 function post_install {
@@ -68,6 +85,7 @@ function main {
   get_repo "$REPO_URI" "$REPO_ROOT"
   install_vim_bundles
   install_dotfiles
+  install_ssh_config
   post_install
 }
 

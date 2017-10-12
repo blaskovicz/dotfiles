@@ -1,0 +1,14 @@
+ForwardAgent yes
+
+Host gitlab.com
+  IdentitiesOnly yes
+  HostName gitlab.com
+  User git
+  IdentityFile ~/.ssh/id_gitlab_rsa
+
+Host github.com
+  IdentitiesOnly yes
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_github_rsa
+
