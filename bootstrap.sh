@@ -55,8 +55,8 @@ function install_dotfiles {
       fi
       diff -u -w "$target" "$file"
     fi
-    if [[ "$OVERWRITE_DOTFILES" == "true" ]]; then
-      install --backup=numbered --compare "$file" "$target" || die "failed to install $file."
+    if [[ ! -e "$target" || "$OVERWRITE_DOTFILES" == "true" ]]; then
+      install --verbose --backup=numbered --compare "$file" "$target" || die "failed to install $file."
     fi
   done
 }
