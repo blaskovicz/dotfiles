@@ -77,6 +77,15 @@ function install_dotfiles {
     careful_copy "./$file" "$HOME/.$file"
   done
 }
+function gpg_setup {
+  log "setting up gpg..."
+  cd_repo
+  gnu_pg="$HOME/.gnupg"
+  mkdir -p "$gnu_pg" || die "failed to mkdir $gnu_pg"
+  gnu_pg_conf="$gnu_pg/gpg.conf"
+  careful_copy "./gpg.conf" "$gnu_pg_conf"
+  #egrep '^no-tty$' "$gnu_pg_conf" || echo 'no-tty' >> "$gnu_pg_conf" || die "failed to update $gnu_pg_conf"
+}
 function post_install {
   log "complete... now run a login shell to pick up changes."
 }
@@ -86,6 +95,7 @@ function main {
   install_vim_bundles
   install_dotfiles
   install_ssh_config
+  gpg_setup
   post_install
 }
 
