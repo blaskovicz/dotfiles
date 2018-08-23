@@ -73,7 +73,7 @@ function install_ssh_config {
 function install_dotfiles {
   log "installing files..."
   cd_repo
-  for file in profile terminal-shim tmux.conf vimrc gitconfig aws_setup; do
+  for file in profile terminal-shim tmux.conf vimrc gitconfig aws_setup bash_aliases; do
     careful_copy "./$file" "$HOME/.$file"
   done
 }
